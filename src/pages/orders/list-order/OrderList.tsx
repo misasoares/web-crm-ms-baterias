@@ -20,19 +20,21 @@ export const OrderList: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
               <TableCell>Cliente</TableCell>
-              <TableCell>Total</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>Tipo</TableCell>
+              <TableCell>Veículo</TableCell>
+              <TableCell>Produto</TableCell>
+              <TableCell>Data</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {orders.map((order) => (
               <TableRow key={order.id}>
-                <TableCell>{order.id}</TableCell>
-                <TableCell>{order.customerName}</TableCell>
-                <TableCell>{order.totalAmount}</TableCell>
-                <TableCell>{order.status}</TableCell>
+                <TableCell>{order.customer?.name || 'N/A'}</TableCell>
+                <TableCell>{order.type}</TableCell>
+                <TableCell>{order.vehicle}</TableCell>
+                <TableCell>{order.product}</TableCell>
+                <TableCell>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
               </TableRow>
             ))}
           </TableBody>
