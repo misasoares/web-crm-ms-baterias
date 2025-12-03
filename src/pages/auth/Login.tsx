@@ -45,9 +45,9 @@ export const Login = () => {
           password: formData.password
         });
 
-        if (response.success !== false) {
-           const data = response as any;
-           if (data.access_token) {
+        if (response.success) {
+           const data = response.data as any;
+           if (data && data.access_token) {
              localStorage.setItem('ACCESS_TOKEN', data.access_token);
              navigate('/');
            } else {
@@ -63,7 +63,7 @@ export const Login = () => {
           password: formData.password
         });
 
-        if (response.success !== false) {
+        if (response.success) {
           setIsLogin(true);
           setError('Cadastro realizado com sucesso! Por favor, faça login.');
           setFormData(prev => ({ ...prev, password: '' }));

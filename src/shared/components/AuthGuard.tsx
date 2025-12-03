@@ -23,11 +23,9 @@ export const AuthGuard = ({ children, isPrivate }: AuthGuardProps) => {
         }
 
         try {
-          const response = await httpClient.doGet('/auth/verify-access-token');
-          // Cast to any to handle boolean return from API which mismatches ResponseAPI interface
-          const res = response as any;
+          const response = await httpClient.doGet<boolean>('/auth/verify-access-token');
           
-          if (res === true || (res.success !== false && res !== false)) {
+          if (response.success) {
              setIsLoading(false);
           } else {
             throw new Error('Invalid token');
@@ -40,10 +38,9 @@ export const AuthGuard = ({ children, isPrivate }: AuthGuardProps) => {
         // Public route (Login)
         if (token) {
           try {
-            const response = await httpClient.doGet('/auth/verify-access-token');
-             const res = response as any;
+            const response = await httpClient.doGet<boolean>('/auth/verify-access-token');
              
-             if (res === true || (res.success !== false && res !== false)) {
+             if (response.success) {
                navigate('/orders'); // Redirect to orders if already logged in
                return;
              } else {

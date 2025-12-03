@@ -1,6 +1,6 @@
 export interface ResponseAPI<T = any> {
   success: boolean;
-  code?: number;
+  code: number;
   message?: string;
   invalidFields?: any[];
   data?: T;
