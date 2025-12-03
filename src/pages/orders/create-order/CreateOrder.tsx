@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Box, CircularProgress, Autocomplete } from '@mui/material';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  CircularProgress,
+  Autocomplete,
+} from '@mui/material';
 import { useCreateOrderHook } from './useCreateOrderHook';
 import { OrderType, type Customer } from '../types';
 
 export const CreateOrder: React.FC = () => {
-  const { createOrder, loading, searchCustomers, customers } = useCreateOrderHook();
+  const { createOrder, loading, searchCustomers, customers } =
+    useCreateOrderHook();
   const [formData, setFormData] = useState({
     customerId: '',
     customerName: '',
@@ -13,9 +22,13 @@ export const CreateOrder: React.FC = () => {
     vehicle: '',
     product: '',
   });
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
+    null,
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -23,13 +36,16 @@ export const CreateOrder: React.FC = () => {
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData({
-          ...formData,
-          [e.target.name]: e.target.value,
-      });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleCustomerChange = (_: any, newValue: string | Customer | null) => {
+  const handleCustomerChange = (
+    _: React.SyntheticEvent,
+    newValue: string | Customer | null,
+  ) => {
     if (typeof newValue === 'string') {
       // User typed a new name
       setSelectedCustomer(null);
@@ -60,39 +76,54 @@ export const CreateOrder: React.FC = () => {
     }
   };
 
-  const handleInputChange = (_: any, newInputValue: string) => {
-      searchCustomers(newInputValue);
-      if (!selectedCustomer) {
-          setFormData(prev => ({ ...prev, customerName: newInputValue }));
-      }
+  const handleInputChange = (
+    _: React.SyntheticEvent,
+    newInputValue: string,
+  ) => {
+    searchCustomers(newInputValue);
+    if (!selectedCustomer) {
+      setFormData((prev) => ({ ...prev, customerName: newInputValue }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.type && formData.vehicle && formData.product) {
-        // If customerId is present, we use it. If not, we need name and phone.
-        if (formData.customerId || (formData.customerName && formData.customerPhone)) {
-            await createOrder({
-                customerId: formData.customerId || undefined,
-                customerName: formData.customerId ? undefined : formData.customerName,
-                customerPhone: formData.customerId ? undefined : formData.customerPhone,
-                type: formData.type as OrderType,
-                vehicle: formData.vehicle,
-                product: formData.product,
-            });
-        }
+      // If customerId is present, we use it. If not, we need name and phone.
+      if (
+        formData.customerId ||
+        (formData.customerName && formData.customerPhone)
+      ) {
+        await createOrder({
+          customerId: formData.customerId || undefined,
+          customerName: formData.customerId ? undefined : formData.customerName,
+          customerPhone: formData.customerId
+            ? undefined
+            : formData.customerPhone,
+          type: formData.type as OrderType,
+          vehicle: formData.vehicle,
+          product: formData.product,
+        });
+      }
     }
   };
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>Criar Pedido</Typography>
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        
+      <Typography variant="h4" gutterBottom>
+        Criar Pedido
+      </Typography>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+      >
         <Autocomplete
           freeSolo
           options={customers}
-          getOptionLabel={(option) => typeof option === 'string' ? option : option.name}
+          getOptionLabel={(option) =>
+            typeof option === 'string' ? option : option.name
+          }
           filterOptions={(x) => x}
           value={selectedCustomer}
           onChange={handleCustomerChange}

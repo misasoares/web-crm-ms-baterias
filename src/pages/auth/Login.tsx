@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { httpClient } from '../../kernel/http/axios-client';
 import { ThemeSwitcher } from '../../shared/components/ThemeSwitcher';
-import { 
-  EmailOutlined, 
-  LockOutlined, 
-  VisibilityOutlined, 
+import {
+  EmailOutlined,
+  LockOutlined,
+  VisibilityOutlined,
   VisibilityOffOutlined,
   Facebook,
   Google,
   WhatsApp,
-  BatteryChargingFull
+  BatteryChargingFull,
 } from '@mui/icons-material';
 
 export const Login = () => {
@@ -22,13 +22,13 @@ export const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    name: ''
+    name: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     setError('');
   };
@@ -42,17 +42,17 @@ export const Login = () => {
       if (isLogin) {
         const response = await httpClient.doPost('/auth/login', {
           email: formData.email,
-          password: formData.password
+          password: formData.password,
         });
 
         if (response.success) {
-           const data = response.data as any;
-           if (data && data.access_token) {
-             localStorage.setItem('ACCESS_TOKEN', data.access_token);
-             navigate('/');
-           } else {
-             setError('Falha no login: Nenhum token recebido');
-           }
+          const data = response.data as { access_token: string };
+          if (data && data.access_token) {
+            localStorage.setItem('ACCESS_TOKEN', data.access_token);
+            navigate('/');
+          } else {
+            setError('Falha no login: Nenhum token recebido');
+          }
         } else {
           setError(response.message || 'Falha no login');
         }
@@ -60,19 +60,23 @@ export const Login = () => {
         const response = await httpClient.doPost('/auth/register', {
           name: formData.name,
           email: formData.email,
-          password: formData.password
+          password: formData.password,
         });
 
         if (response.success) {
           setIsLogin(true);
           setError('Cadastro realizado com sucesso! Por favor, faça login.');
-          setFormData(prev => ({ ...prev, password: '' }));
+          setFormData((prev) => ({ ...prev, password: '' }));
         } else {
           setError(response.message || 'Falha no cadastro');
         }
       }
-    } catch (err: any) {
-      setError(err.message || 'Ocorreu um erro inesperado');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Ocorreu um erro inesperado');
+      }
     } finally {
       setLoading(false);
     }
@@ -82,12 +86,12 @@ export const Login = () => {
     <div className="min-h-screen flex w-full">
       {/* Left Side - Image */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-black">
-        <img 
-          src="/assets/images/login-bg.png" 
-          alt="Bateria Automotiva" 
+        <img
+          src="/assets/images/login-bg.png"
+          alt="Bateria Automotiva"
           className="absolute inset-0 w-full h-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/60 to-transparent" />
         <div className="relative z-10 p-12 flex flex-col justify-between h-full text-white">
           <div>
             <div className="flex items-center gap-2 text-2xl font-bold text-yellow-500">
@@ -124,7 +128,9 @@ export const Login = () => {
               {isLogin ? 'Bem-vindo de volta' : 'Criar Conta'}
             </h2>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              {isLogin ? 'Insira seus dados para acessar sua conta' : 'Comece com sua conta gratuita hoje'}
+              {isLogin
+                ? 'Insira seus dados para acessar sua conta'
+                : 'Comece com sua conta gratuita hoje'}
             </p>
           </div>
 
@@ -132,7 +138,10 @@ export const Login = () => {
             <div className="space-y-4">
               {!isLogin && (
                 <div className="relative">
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     Nome Completo
                   </label>
                   <div className="relative">
@@ -149,9 +158,12 @@ export const Login = () => {
                   </div>
                 </div>
               )}
-              
+
               <div className="relative">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Endereço de Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -172,7 +184,10 @@ export const Login = () => {
               </div>
 
               <div className="relative">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Senha <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -182,18 +197,22 @@ export const Login = () => {
                   <input
                     id="password"
                     name="password"
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     required
                     className="appearance-none block w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-150 ease-in-out sm:text-sm"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={handleChange}
                   />
-                  <div 
+                  <div
                     className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <VisibilityOffOutlined fontSize="small" /> : <VisibilityOutlined fontSize="small" />}
+                    {showPassword ? (
+                      <VisibilityOffOutlined fontSize="small" />
+                    ) : (
+                      <VisibilityOutlined fontSize="small" />
+                    )}
                   </div>
                 </div>
               </div>
@@ -207,13 +226,19 @@ export const Login = () => {
                   type="checkbox"
                   className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900 dark:text-gray-300"
+                >
                   Manter-me conectado
                 </label>
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300">
+                <a
+                  href="#"
+                  className="font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300"
+                >
                   Esqueceu a senha?
                 </a>
               </div>
@@ -228,7 +253,7 @@ export const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transform transition-all duration-150 hover:scale-[1.01]"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transform transition-all duration-150 hover:scale-[1.01]"
             >
               {loading ? 'Processando...' : isLogin ? 'Entrar' : 'Criar Conta'}
             </button>
@@ -238,7 +263,9 @@ export const Login = () => {
                 <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">Continuar com</span>
+                <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+                  Continuar com
+                </span>
               </div>
             </div>
 
@@ -265,7 +292,7 @@ export const Login = () => {
           </form>
 
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-            {isLogin ? "Não tem uma conta? " : "Já tem uma conta? "}
+            {isLogin ? 'Não tem uma conta? ' : 'Já tem uma conta? '}
             <button
               onClick={() => {
                 setIsLogin(!isLogin);

@@ -11,7 +11,7 @@ function customAxios() {
   const axios = _axios.create();
 
   axios.defaults.baseURL = env.REACT_APP_API_URL;
-  axios.interceptors.request.use(config => {
+  axios.interceptors.request.use((config) => {
     const userToken = localStorage.getItem('ACCESS_TOKEN'); // Changed from 'jwt_access_token' to match previous step or I should update token.storage
     const token = userToken ? `Bearer ${userToken}` : '';
     config.headers.authorization = token;
@@ -25,25 +25,32 @@ function customAxios() {
         query?: Record<string, string> | URLSearchParams;
         headers?: Record<string, boolean | string>;
         abortController?: AbortController;
-      }
+      },
     ): Promise<ResponseAPI<T>> {
       try {
         const queries = new URLSearchParams(options?.query as any).toString();
 
-        const response = await axios.get(`${url}${queries ? `?${queries}` : ''}`, {
-          ...options?.params,
-          headers: options?.headers as any,
-          signal: options?.abortController?.signal
-        });
+        const response = await axios.get(
+          `${url}${queries ? `?${queries}` : ''}`,
+          {
+            ...options?.params,
+            headers: options?.headers as any,
+            signal: options?.abortController?.signal,
+          },
+        );
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<T>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             success: false,
             code: error.response.status,
             message: error.response.data.message,
-            invalidFields: error.response.data.invalidFields
+            invalidFields: error.response.data.invalidFields,
           };
         }
 
@@ -53,7 +60,7 @@ function customAxios() {
             success: false,
             code: CODE_REQUEST_CANCELED,
             message: 'A solicitação foi cancelada.',
-            invalidFields: []
+            invalidFields: [],
           };
         }
 
@@ -61,7 +68,7 @@ function customAxios() {
           code: 500,
           success: false,
           message: 'Erro inesperado, tente novamente mais tarde.',
-          invalidFields: []
+          invalidFields: [],
         };
       }
     },
@@ -69,19 +76,25 @@ function customAxios() {
     doPost: async <T = any>(
       url: string,
       data: any,
-      options?: { abortController?: AbortController }
+      options?: { abortController?: AbortController },
     ): Promise<ResponseAPI<T>> => {
       try {
-        const response = await axios.post(url, data, { signal: options?.abortController?.signal });
+        const response = await axios.post(url, data, {
+          signal: options?.abortController?.signal,
+        });
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<T>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             success: false,
             code: error.response.status,
             message: error.response.data.message,
-            invalidFields: error.response.data.invalidFields
+            invalidFields: error.response.data.invalidFields,
           };
         }
 
@@ -91,7 +104,7 @@ function customAxios() {
             success: false,
             code: CODE_REQUEST_CANCELED,
             message: 'A solicitação foi cancelada.',
-            invalidFields: []
+            invalidFields: [],
           };
         }
 
@@ -99,7 +112,7 @@ function customAxios() {
           success: false,
           code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
-          invalidFields: []
+          invalidFields: [],
         };
       }
     },
@@ -112,23 +125,27 @@ function customAxios() {
         query?: Record<string, string> | URLSearchParams;
         headers?: Record<string, boolean | string>;
         abortController?: AbortController;
-      }
+      },
     ): Promise<ResponseAPI<T>> => {
       try {
         const response = await axios.put(url, data, {
           ...options?.params,
           headers: options?.headers as any,
-          signal: options?.abortController?.signal
+          signal: options?.abortController?.signal,
         });
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<T>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             success: false,
             code: error.response.status,
             message: error.response.data.message,
-            invalidFields: error.response.data.invalidFields
+            invalidFields: error.response.data.invalidFields,
           };
         }
 
@@ -138,7 +155,7 @@ function customAxios() {
             success: false,
             code: CODE_REQUEST_CANCELED,
             message: 'A solicitação foi cancelada.',
-            invalidFields: []
+            invalidFields: [],
           };
         }
 
@@ -146,7 +163,7 @@ function customAxios() {
           success: false,
           code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
-          invalidFields: []
+          invalidFields: [],
         };
       }
     },
@@ -159,23 +176,27 @@ function customAxios() {
         query?: Record<string, string> | URLSearchParams;
         headers?: Record<string, boolean | string>;
         abortController?: AbortController;
-      }
+      },
     ): Promise<ResponseAPI<T>> => {
       try {
         const response = await axios.patch(url, data, {
           ...options?.params,
           headers: options?.headers as any,
-          signal: options?.abortController?.signal
+          signal: options?.abortController?.signal,
         });
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<T>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             success: false,
             code: error.response.status,
             message: error.response.data.message,
-            invalidFields: error.response.data.invalidFields
+            invalidFields: error.response.data.invalidFields,
           };
         }
 
@@ -185,7 +206,7 @@ function customAxios() {
             success: false,
             code: CODE_REQUEST_CANCELED,
             message: 'A solicitação foi cancelada.',
-            invalidFields: []
+            invalidFields: [],
           };
         }
 
@@ -193,30 +214,37 @@ function customAxios() {
           success: false,
           code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
-          invalidFields: []
+          invalidFields: [],
         };
       }
     },
 
-    doDelete: async <T = any>(url: string, params?: any): Promise<ResponseAPI<any>> => {
+    doDelete: async <T = any>(
+      url: string,
+      params?: any,
+    ): Promise<ResponseAPI<any>> => {
       try {
         const response = await axios.delete(url, { params });
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<T>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             success: false,
             code: error.response.status,
             message: error.response.data.message,
-            invalidFields: error.response.data.invalidFields
+            invalidFields: error.response.data.invalidFields,
           };
         }
         return {
           success: false,
           code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
-          invalidFields: []
+          invalidFields: [],
         };
       }
     },
@@ -227,19 +255,26 @@ function customAxios() {
         params?: Record<string, string>;
         query?: Record<string, string> | URLSearchParams;
         headers?: Record<string, boolean | string>;
-      }
+      },
     ): Promise<ResponseFile> {
       try {
         const queries = new URLSearchParams(options?.query as any).toString();
 
-        const response = await axios.get(`${url}${queries ? `?${queries}` : ''}`, {
-          ...options?.params,
-          headers: options?.headers as any
-        });
+        const response = await axios.get(
+          `${url}${queries ? `?${queries}` : ''}`,
+          {
+            ...options?.params,
+            headers: options?.headers as any,
+          },
+        );
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<T>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             data: new Blob(),
             // success: false, // ResponseFile doesn't have success
@@ -265,28 +300,35 @@ function customAxios() {
         query?: Record<string, string> | URLSearchParams;
         headers?: Record<string, boolean | string>;
         abortController?: AbortController;
-      }
+      },
     ): Promise<Blob> {
       try {
         const queries = new URLSearchParams(options?.query as any).toString();
 
-        const response = await axios.get(`${url}${queries ? `?${queries}` : ''}`, {
-          params: options?.params,
-          headers: options?.headers as any,
-          signal: options?.abortController?.signal,
-          responseType: 'blob'
-        });
+        const response = await axios.get(
+          `${url}${queries ? `?${queries}` : ''}`,
+          {
+            params: options?.params,
+            headers: options?.headers as any,
+            signal: options?.abortController?.signal,
+            responseType: 'blob',
+          },
+        );
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<any>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<any>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           throw new Error(
             JSON.stringify({
               success: false,
               code: error.response.status,
               message: error.response.data.message,
-              invalidFields: error.response.data.invalidFields
-            })
+              invalidFields: error.response.data.invalidFields,
+            }),
           );
         }
 
@@ -296,8 +338,8 @@ function customAxios() {
               success: false,
               code: CODE_REQUEST_CANCELED,
               message: 'A solicitação foi cancelada.',
-              invalidFields: []
-            })
+              invalidFields: [],
+            }),
           );
         }
 
@@ -306,35 +348,42 @@ function customAxios() {
             success: false,
             code: 500,
             message: 'Erro inesperado, tente novamente mais tarde.',
-            invalidFields: []
-          })
+            invalidFields: [],
+          }),
         );
       }
     },
 
-    doUpload: async <T = any>(url: string, data: any): Promise<ResponseAPI<any>> => {
+    doUpload: async <T = any>(
+      url: string,
+      data: any,
+    ): Promise<ResponseAPI<any>> => {
       try {
         const response = await axios.post(url, data, {
           headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+            'Content-Type': 'multipart/form-data',
+          },
         });
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<T>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             success: false,
             code: error.response.status,
             message: error.response.data.message,
-            invalidFields: error.response.data.invalidFields
+            invalidFields: error.response.data.invalidFields,
           };
         }
         return {
           success: false,
           code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
-          invalidFields: []
+          invalidFields: [],
         };
       }
     },
@@ -346,26 +395,33 @@ function customAxios() {
         query?: Record<string, string> | URLSearchParams;
         headers?: Record<string, boolean | string>;
         abortController?: AbortController;
-      }
+      },
     ): Promise<any> {
       try {
         const queries = new URLSearchParams(options?.query as any).toString();
 
-        const response = await axios.get(`${url}${queries ? `?${queries}` : ''}`, {
-          params: options?.params,
-          headers: options?.headers as any,
-          signal: options?.abortController?.signal,
-          responseType: 'blob'
-        });
+        const response = await axios.get(
+          `${url}${queries ? `?${queries}` : ''}`,
+          {
+            params: options?.params,
+            headers: options?.headers as any,
+            signal: options?.abortController?.signal,
+            responseType: 'blob',
+          },
+        );
 
         return response.data;
       } catch (error: any) {
-        if (isAxiosError<ResponseAPI<any>, Error>(error) && error.response && !error.response.data.success) {
+        if (
+          isAxiosError<ResponseAPI<any>, Error>(error) &&
+          error.response &&
+          !error.response.data.success
+        ) {
           return {
             success: false,
             code: error.response.status,
             message: error.response.data.message,
-            invalidFields: error.response.data.invalidFields
+            invalidFields: error.response.data.invalidFields,
           };
         }
 
@@ -375,7 +431,7 @@ function customAxios() {
             success: false,
             code: CODE_REQUEST_CANCELED,
             message: 'A solicitação foi cancelada.',
-            invalidFields: []
+            invalidFields: [],
           };
         }
 
@@ -383,10 +439,10 @@ function customAxios() {
           success: false,
           code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
-          invalidFields: []
+          invalidFields: [],
         };
       }
-    }
+    },
   };
 }
 

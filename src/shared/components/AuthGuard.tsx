@@ -23,14 +23,16 @@ export const AuthGuard = ({ children, isPrivate }: AuthGuardProps) => {
         }
 
         try {
-          const response = await httpClient.doGet<boolean>('/auth/verify-access-token');
-          
+          const response = await httpClient.doGet<boolean>(
+            '/auth/verify-access-token',
+          );
+
           if (response.success) {
-             setIsLoading(false);
+            setIsLoading(false);
           } else {
             throw new Error('Invalid token');
           }
-        } catch (error) {
+        } catch {
           localStorage.removeItem('ACCESS_TOKEN');
           navigate('/login');
         }
@@ -38,19 +40,21 @@ export const AuthGuard = ({ children, isPrivate }: AuthGuardProps) => {
         // Public route (Login)
         if (token) {
           try {
-            const response = await httpClient.doGet<boolean>('/auth/verify-access-token');
-             
-             if (response.success) {
-               navigate('/orders'); // Redirect to orders if already logged in
-               return;
-             } else {
-               // Token invalid, clear it and stay on login
-               localStorage.removeItem('ACCESS_TOKEN');
-               setIsLoading(false);
-             }
-          } catch (error) {
-             localStorage.removeItem('ACCESS_TOKEN');
-             setIsLoading(false);
+            const response = await httpClient.doGet<boolean>(
+              '/auth/verify-access-token',
+            );
+
+            if (response.success) {
+              navigate('/orders'); // Redirect to orders if already logged in
+              return;
+            } else {
+              // Token invalid, clear it and stay on login
+              localStorage.removeItem('ACCESS_TOKEN');
+              setIsLoading(false);
+            }
+          } catch {
+            localStorage.removeItem('ACCESS_TOKEN');
+            setIsLoading(false);
           }
         } else {
           setIsLoading(false);

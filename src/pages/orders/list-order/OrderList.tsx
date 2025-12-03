@@ -1,5 +1,24 @@
 import React from 'react';
-import { Container, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, CircularProgress, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  CircularProgress,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import { useOrderListHook } from './useOrderListHook';
@@ -28,14 +47,20 @@ export const OrderList: React.FC = () => {
   };
 
   if (loading) {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
     <Container>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
         <Typography variant="h4">Pedidos</Typography>
-        <Button variant="contained" component={Link} to="create">Criar Pedido</Button>
+        <Button variant="contained" component={Link} to="create">
+          Criar Pedido
+        </Button>
       </Box>
       <TableContainer component={Paper}>
         <Table>
@@ -56,9 +81,14 @@ export const OrderList: React.FC = () => {
                 <TableCell>{order.type}</TableCell>
                 <TableCell>{order.vehicle}</TableCell>
                 <TableCell>{order.product}</TableCell>
-                <TableCell>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell>
-                  <IconButton onClick={() => handleDeleteClick(order.id)} color="error">
+                  {new Date(order.createdAt).toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  <IconButton
+                    onClick={() => handleDeleteClick(order.id)}
+                    color="error"
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -68,19 +98,28 @@ export const OrderList: React.FC = () => {
         </Table>
       </TableContainer>
 
-      <Dialog
-        open={deleteDialogOpen}
-        onClose={handleCancelDelete}
-      >
+      <Dialog open={deleteDialogOpen} onClose={handleCancelDelete}>
         <DialogTitle>Confirmar exclusão</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Tem certeza que deseja excluir este pedido? Esta ação não pode ser desfeita.
+            Tem certeza que deseja excluir este pedido? Esta ação não pode ser
+            desfeita.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelDelete} variant="outlined" color="secondary">Cancelar</Button>
-          <Button onClick={handleConfirmDelete} variant="contained" color="primary" autoFocus>
+          <Button
+            onClick={handleCancelDelete}
+            variant="outlined"
+            color="secondary"
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            color="primary"
+            autoFocus
+          >
             Deletar
           </Button>
         </DialogActions>

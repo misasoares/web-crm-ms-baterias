@@ -1,8 +1,8 @@
-export interface ResponseAPI<T = any> {
+export interface ResponseAPI<T = unknown> {
   success: boolean;
   code: number;
   message?: string;
-  invalidFields?: any[];
+  invalidFields?: unknown[];
   data?: T;
 }
 

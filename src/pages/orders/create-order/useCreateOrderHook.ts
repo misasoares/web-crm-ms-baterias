@@ -1,32 +1,34 @@
-import { useState, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { httpClient } from '../../../kernel/http/axios-client';
 import type { CreateOrderDTO, Customer } from '../types';
 import { debounce } from '@mui/material/utils';
-
 
 export const useCreateOrderHook = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
 
-  const searchCustomers = useCallback(
-    debounce(async (query: string) => {
-      if (!query) {
+  const searchCustomers = useMemo(
+    () =>
+      debounce(async (query: string) => {
+        if (!query) {
           setCustomers([]);
           return;
-      }
-      try {
-        const response = await httpClient.doGet<Customer[]>(`/customers?search=${query}`);
-       
-        if (response.success && response.data) {
-          setCustomers(response.data);
         }
-      } catch (error) {
-        console.warn('Failed to fetch customers', error);
-      }
-    }, 300),
-    []
+        try {
+          const response = await httpClient.doGet<Customer[]>(
+            `/customers?search=${query}`,
+          );
+
+          if (response.success && response.data) {
+            setCustomers(response.data);
+          }
+        } catch (error) {
+          console.warn('Failed to fetch customers', error);
+        }
+      }, 300),
+    [],
   );
 
   const createOrder = async (data: CreateOrderDTO) => {

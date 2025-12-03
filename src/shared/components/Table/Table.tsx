@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  Table as MuiTable, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
-  Paper, 
+import {
+  Table as MuiTable,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
   Checkbox,
   Box,
-  Typography
+  Typography,
 } from '@mui/material';
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 
@@ -30,16 +30,19 @@ interface TableProps<T> {
   title?: string;
 }
 
-export function Table<T extends { id: string | number }>({ 
-  columns, 
-  data, 
-  onSort, 
+export function Table<T extends { id: string | number }>({
+  columns,
+  data,
+  onSort,
   onSelect,
   actions,
-  title
+  title,
 }: TableProps<T>) {
   const [selected, setSelected] = useState<string[]>([]);
-  const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(null);
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof T;
+    direction: 'asc' | 'desc';
+  } | null>(null);
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -71,18 +74,20 @@ export function Table<T extends { id: string | number }>({
 
     setSelected(newSelected);
     if (onSelect) {
-      const selectedRows = data.filter(row => newSelected.includes(String(row.id)));
+      const selectedRows = data.filter((row) =>
+        newSelected.includes(String(row.id)),
+      );
       onSelect(selectedRows);
     }
   };
 
   const handleSort = (column: Column<T>) => {
     if (!column.sortable || typeof column.accessor !== 'string') return;
-    
+
     const key = column.accessor as keyof T;
     const isAsc = sortConfig?.key === key && sortConfig.direction === 'asc';
     const direction = isAsc ? 'desc' : 'asc';
-    
+
     setSortConfig({ key, direction });
     if (onSort) onSort(key, direction);
   };
@@ -92,18 +97,30 @@ export function Table<T extends { id: string | number }>({
   return (
     <Box className="w-full">
       {title && (
-        <Typography variant="h6" component="div" className="p-4 font-bold text-gray-800 dark:text-white">
+        <Typography
+          variant="h6"
+          component="div"
+          className="p-4 font-bold text-gray-800 dark:text-white"
+        >
           {title}
         </Typography>
       )}
-      <TableContainer component={Paper} className="bg-white dark:bg-gray-800 shadow-sm rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+      <TableContainer
+        component={Paper}
+        className="bg-white dark:bg-gray-800 shadow-sm rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700"
+      >
         <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead className="bg-gray-50 dark:bg-gray-900/50">
             <TableRow>
-              <TableCell padding="checkbox" className="border-b border-gray-100 dark:border-gray-700">
+              <TableCell
+                padding="checkbox"
+                className="border-b border-gray-100 dark:border-gray-700"
+              >
                 <Checkbox
                   color="primary"
-                  indeterminate={selected.length > 0 && selected.length < data.length}
+                  indeterminate={
+                    selected.length > 0 && selected.length < data.length
+                  }
                   checked={data.length > 0 && selected.length === data.length}
                   onChange={handleSelectAll}
                   className="text-gray-400 dark:text-gray-500"
@@ -115,24 +132,31 @@ export function Table<T extends { id: string | number }>({
                   align={column.align || 'left'}
                   className="border-b border-gray-100 dark:border-gray-700 py-4"
                 >
-                  <div 
+                  <div
                     className={`flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 ${column.sortable ? 'cursor-pointer select-none hover:text-gray-700 dark:hover:text-gray-200' : ''}`}
                     onClick={() => handleSort(column)}
                   >
                     {column.header}
-                    {column.sortable && sortConfig?.key === column.accessor && (
-                      sortConfig.direction === 'asc' ? <ArrowUpward fontSize="small" className="w-4 h-4" /> : <ArrowDownward fontSize="small" className="w-4 h-4" />
-                    )}
+                    {column.sortable &&
+                      sortConfig?.key === column.accessor &&
+                      (sortConfig.direction === 'asc' ? (
+                        <ArrowUpward fontSize="small" className="w-4 h-4" />
+                      ) : (
+                        <ArrowDownward fontSize="small" className="w-4 h-4" />
+                      ))}
                     {column.sortable && sortConfig?.key !== column.accessor && (
                       <div className="w-4 h-4 opacity-0 group-hover:opacity-50">
-                         <ArrowUpward fontSize="small" className="w-4 h-4" />
+                        <ArrowUpward fontSize="small" className="w-4 h-4" />
                       </div>
                     )}
                   </div>
                 </TableCell>
               ))}
               {actions && (
-                <TableCell align="right" className="border-b border-gray-100 dark:border-gray-700">
+                <TableCell
+                  align="right"
+                  className="border-b border-gray-100 dark:border-gray-700"
+                >
                   <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                     Actions
                   </span>
@@ -154,7 +178,10 @@ export function Table<T extends { id: string | number }>({
                   selected={isItemSelected}
                   className={`cursor-pointer transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 ${isItemSelected ? 'bg-red-50 dark:bg-red-900/10' : ''}`}
                 >
-                  <TableCell padding="checkbox" className="border-b border-gray-100 dark:border-gray-700">
+                  <TableCell
+                    padding="checkbox"
+                    className="border-b border-gray-100 dark:border-gray-700"
+                  >
                     <Checkbox
                       color="primary"
                       checked={isItemSelected}
@@ -162,20 +189,23 @@ export function Table<T extends { id: string | number }>({
                     />
                   </TableCell>
                   {columns.map((column, index) => (
-                    <TableCell 
-                      key={index} 
+                    <TableCell
+                      key={index}
                       align={column.align || 'left'}
                       className="border-b border-gray-100 dark:border-gray-700 py-4 text-sm text-gray-700 dark:text-gray-300"
                     >
-                      {column.render ? column.render(row) : (
-                        typeof column.accessor === 'function' 
-                          ? column.accessor(row) 
-                          : (row[column.accessor] as React.ReactNode)
-                      )}
+                      {column.render
+                        ? column.render(row)
+                        : typeof column.accessor === 'function'
+                          ? column.accessor(row)
+                          : (row[column.accessor] as React.ReactNode)}
                     </TableCell>
                   ))}
                   {actions && (
-                    <TableCell align="right" className="border-b border-gray-100 dark:border-gray-700">
+                    <TableCell
+                      align="right"
+                      className="border-b border-gray-100 dark:border-gray-700"
+                    >
                       <div className="flex justify-end gap-2">
                         {actions(row)}
                       </div>

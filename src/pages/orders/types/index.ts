@@ -3,7 +3,7 @@ export const OrderType = {
   OIL: 'OIL',
 } as const;
 
-export type OrderType = typeof OrderType[keyof typeof OrderType];
+export type OrderType = (typeof OrderType)[keyof typeof OrderType];
 
 export interface Order {
   id: string;

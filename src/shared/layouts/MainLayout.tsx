@@ -1,5 +1,12 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Container, Box, Button } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Box,
+  Button,
+} from '@mui/material';
 import { Outlet, Link } from 'react-router-dom';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 
@@ -12,8 +19,10 @@ export const MainLayout: React.FC = () => {
             CRM App
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-             <ThemeSwitcher />
-             <Button color="inherit" component={Link} to="/orders">Orders</Button>
+            <ThemeSwitcher />
+            <Button color="inherit" component={Link} to="/orders">
+              Orders
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>

@@ -1,13 +1,12 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { httpClient } from '../../../kernel/http/axios-client';
-import { type Order, OrderType } from '../types';
+import { type Order } from '../types';
 
 export const useOrderListHook = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     setLoading(true);
     try {
       const response = await httpClient.doGet<Order[]>('/orders');
@@ -18,10 +17,11 @@ export const useOrderListHook = () => {
       console.warn('Backend not found, using mock data', error);
     }
     setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     fetchOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteOrder = async (id: string) => {
