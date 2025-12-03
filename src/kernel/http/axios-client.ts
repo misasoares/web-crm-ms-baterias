@@ -40,6 +40,12 @@ function customAxios() {
           },
         );
 
+        if (response.data.message) {
+          triggerSnackbar(response.data.message, 'success');
+        } else if (response.data.success) {
+          triggerSnackbar('Operação realizada com sucesso', 'success');
+        }
+
         return response.data;
       } catch (error: any) {
         if (
@@ -91,6 +97,12 @@ function customAxios() {
         const response = await axios.post(url, data, {
           signal: options?.abortController?.signal,
         });
+
+        if (response.data.message) {
+          triggerSnackbar(response.data.message, 'success');
+        } else if (response.data.success) {
+          triggerSnackbar('Operação realizada com sucesso', 'success');
+        }
 
         return response.data;
       } catch (error: any) {
@@ -151,6 +163,12 @@ function customAxios() {
           signal: options?.abortController?.signal,
         });
 
+        if (response.data.message) {
+          triggerSnackbar(response.data.message, 'success');
+        } else if (response.data.success) {
+          triggerSnackbar('Operação realizada com sucesso', 'success');
+        }
+
         return response.data;
       } catch (error: any) {
         if (
@@ -210,6 +228,12 @@ function customAxios() {
           signal: options?.abortController?.signal,
         });
 
+        if (response.data.message) {
+          triggerSnackbar(response.data.message, 'success');
+        } else if (response.data.success) {
+          triggerSnackbar('Operação realizada com sucesso', 'success');
+        }
+
         return response.data;
       } catch (error: any) {
         if (
@@ -258,6 +282,12 @@ function customAxios() {
     ): Promise<ResponseAPI<any>> => {
       try {
         const response = await axios.delete(url, { params });
+
+        if (response.data.message) {
+          triggerSnackbar(response.data.message, 'success');
+        } else if (response.data.success) {
+          triggerSnackbar('Operação realizada com sucesso', 'success');
+        }
 
         return response.data;
       } catch (error: any) {
@@ -421,6 +451,12 @@ function customAxios() {
             'Content-Type': 'multipart/form-data',
           },
         });
+
+        if (response.data.message) {
+          triggerSnackbar(response.data.message, 'success');
+        } else if (response.data.success) {
+          triggerSnackbar('Operação realizada com sucesso', 'success');
+        }
 
         return response.data;
       } catch (error: any) {
