@@ -10,7 +10,29 @@ import {
 } from '@mui/material';
 import { useCreateOrderHook } from './useCreateOrderHook';
 import { OrderType, type Customer } from '../types';
+import { IMaskInput } from 'react-imask';
 
+interface CustomProps {
+  onChange: (event: { target: { name: string; value: string } }) => void;
+  name: string;
+}
+
+const PhoneMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
+  function PhoneMaskCustom(props, ref) {
+    const { onChange, ...other } = props;
+    return (
+      <IMaskInput
+        {...other}
+        mask="+{55} (00) 9 0000-0000"
+        inputRef={ref as React.RefCallback<HTMLInputElement>}
+        onAccept={(value: string) =>
+          onChange({ target: { name: props.name, value } })
+        }
+        overwrite
+      />
+    );
+  },
+);
 export const CreateOrder: React.FC = () => {
   const { createOrder, loading, searchCustomers, customers } =
     useCreateOrderHook();
@@ -145,7 +167,10 @@ export const CreateOrder: React.FC = () => {
           value={formData.customerPhone}
           onChange={handleChange}
           required
-          disabled={loading || !!formData.customerId} // Disable if existing customer selected? Or allow edit? Req says "filled automatically". Let's allow edit if needed but maybe readonly is safer if we link to ID. But if they change phone, it might mean new customer? For now, let's keep it enabled but auto-filled. Actually, if ID is sent, backend ignores name/phone usually. But my backend logic uses ID if present. So editing phone here won't update customer unless I add update logic. Let's disable if ID is present to avoid confusion.
+          disabled={loading || !!formData.customerId}
+          InputProps={{
+            inputComponent: PhoneMaskCustom as never,
+          }}
         />
 
         <TextField
