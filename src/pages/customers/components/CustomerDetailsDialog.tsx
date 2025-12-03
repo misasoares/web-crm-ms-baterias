@@ -41,28 +41,28 @@ export const CustomerDetailsDialog: React.FC<CustomerDetailsDialogProps> = ({
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
+    const fetchCustomerDetails = async () => {
+      setLoading(true);
+      try {
+        const response = await httpClient.doGet<CustomerWithOrders>(
+          `/customers/${customerId}`,
+        );
+        if (response.success && response.data) {
+          setCustomer(response.data);
+          setName(response.data.name);
+          setPhone(response.data.phone);
+        }
+      } catch (error) {
+        console.error('Error fetching customer details:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (open && customerId) {
       fetchCustomerDetails();
     }
   }, [open, customerId]);
-
-  const fetchCustomerDetails = async () => {
-    setLoading(true);
-    try {
-      const response = await httpClient.doGet<CustomerWithOrders>(
-        `/customers/${customerId}`,
-      );
-      if (response.success && response.data) {
-        setCustomer(response.data);
-        setName(response.data.name);
-        setPhone(response.data.phone);
-      }
-    } catch (error) {
-      console.error('Error fetching customer details:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSave = async () => {
     setSaving(true);
