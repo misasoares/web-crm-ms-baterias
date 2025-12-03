@@ -7,10 +7,29 @@ import {
   Box,
   Button,
 } from '@mui/material';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 
 export const MainLayout: React.FC = () => {
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  const getButtonStyle = (path: string) => ({
+    borderBottom: isActive(path) ? '2px solid white' : '2px solid transparent',
+    borderRadius: 0,
+    opacity: isActive(path) ? 1 : 0.7,
+    '&:hover': {
+      opacity: 1,
+      borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
+    },
+  });
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar position="static">
@@ -31,16 +50,36 @@ export const MainLayout: React.FC = () => {
               gap: 2,
             }}
           >
-            <Button color="inherit" component={Link} to="/">
+            <Button
+              color="inherit"
+              component={Link}
+              to="/"
+              sx={getButtonStyle('/')}
+            >
               Home
             </Button>
-            <Button color="inherit" component={Link} to="/orders">
+            <Button
+              color="inherit"
+              component={Link}
+              to="/orders"
+              sx={getButtonStyle('/orders')}
+            >
               Pedidos
             </Button>
-            <Button color="inherit" component={Link} to="/customers">
+            <Button
+              color="inherit"
+              component={Link}
+              to="/customers"
+              sx={getButtonStyle('/customers')}
+            >
               Clientes
             </Button>
-            <Button color="inherit" component={Link} to="/messages">
+            <Button
+              color="inherit"
+              component={Link}
+              to="/messages"
+              sx={getButtonStyle('/messages')}
+            >
               Lista de mensagens
             </Button>
           </Box>
