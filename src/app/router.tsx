@@ -5,6 +5,7 @@ import { Login } from '../pages/auth/Login';
 import { AuthGuard } from '../shared/components/AuthGuard';
 import { TableDemo } from '../pages/demo/TableDemo';
 import { CustomerList } from '../pages/customers/list-customer/CustomerList';
+import { TestMessage } from '../pages/test-message/TestMessage';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: 'customers',
         element: <CustomerList />,
+      },
+      {
+        path: 'test-message',
+        element: <TestMessage />,
       },
     ],
   },
