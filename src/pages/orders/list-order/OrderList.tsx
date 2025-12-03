@@ -13,15 +13,15 @@ export const OrderList: React.FC = () => {
   return (
     <Container>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-        <Typography variant="h4">Orders</Typography>
-        <Button variant="contained" component={Link} to="create">Create Order</Button>
+        <Typography variant="h4">Pedidos</Typography>
+        <Button variant="contained" component={Link} to="create">Criar Pedido</Button>
       </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Customer</TableCell>
+              <TableCell>Cliente</TableCell>
               <TableCell>Total</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>

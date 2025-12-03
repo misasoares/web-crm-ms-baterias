@@ -17,17 +17,17 @@ export const CreateOrder: React.FC = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>Create Order</Typography>
+      <Typography variant="h4" gutterBottom>Criar Pedido</Typography>
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <TextField
-          label="Customer Name"
+          label="Nome do Cliente"
           value={customerName}
           onChange={(e) => setCustomerName(e.target.value)}
           required
           disabled={loading}
         />
         <TextField
-          label="Total Amount"
+          label="Valor Total"
           type="number"
           value={totalAmount}
           onChange={(e) => setTotalAmount(e.target.value)}
@@ -35,7 +35,7 @@ export const CreateOrder: React.FC = () => {
           disabled={loading}
         />
         <Button type="submit" variant="contained" disabled={loading}>
-          {loading ? <CircularProgress size={24} /> : 'Create'}
+          {loading ? <CircularProgress size={24} /> : 'Criar'}
         </Button>
       </Box>
     </Container>
