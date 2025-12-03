@@ -1,6 +1,7 @@
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { useTheme } from '../shared/contexts/ThemeContext';
+import { SnackbarProvider } from '../shared/contexts/SnackbarContext';
 import {
   createTheme,
   ThemeProvider as MuiThemeProvider,
@@ -30,8 +31,10 @@ const App: React.FC = () => {
 
   return (
     <MuiThemeProvider theme={muiTheme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
+      <SnackbarProvider>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </SnackbarProvider>
     </MuiThemeProvider>
   );
 };

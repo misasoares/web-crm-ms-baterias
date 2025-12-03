@@ -3,6 +3,7 @@ import _axios, { isAxiosError } from 'axios';
 
 import { env } from '../../envs';
 import type { ResponseAPI, ResponseFile } from './types';
+import { triggerSnackbar } from '../../shared/utils/snackbar-events';
 
 export const REQUEST_CANCELED = 'ERR_CANCELED';
 export const CODE_REQUEST_CANCELED = -1;
@@ -46,6 +47,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             success: false,
             code: error.response.status,
@@ -64,6 +69,10 @@ function customAxios() {
           };
         }
 
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           code: 500,
           success: false,
@@ -90,6 +99,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             success: false,
             code: error.response.status,
@@ -108,6 +121,10 @@ function customAxios() {
           };
         }
 
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           success: false,
           code: 500,
@@ -141,6 +158,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             success: false,
             code: error.response.status,
@@ -159,6 +180,10 @@ function customAxios() {
           };
         }
 
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           success: false,
           code: 500,
@@ -192,6 +217,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             success: false,
             code: error.response.status,
@@ -210,6 +239,10 @@ function customAxios() {
           };
         }
 
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           success: false,
           code: 500,
@@ -233,6 +266,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             success: false,
             code: error.response.status,
@@ -240,6 +277,10 @@ function customAxios() {
             invalidFields: error.response.data.invalidFields,
           };
         }
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           success: false,
           code: 500,
@@ -275,6 +316,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             data: new Blob(),
             // success: false, // ResponseFile doesn't have success
@@ -283,6 +328,10 @@ function customAxios() {
             // invalidFields: error.response.data.invalidFields
           };
         }
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           data: new Blob(),
           // code: 500,
@@ -322,6 +371,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           throw new Error(
             JSON.stringify({
               success: false,
@@ -343,6 +396,10 @@ function customAxios() {
           );
         }
 
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         throw new Error(
           JSON.stringify({
             success: false,
@@ -372,6 +429,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             success: false,
             code: error.response.status,
@@ -379,6 +440,10 @@ function customAxios() {
             invalidFields: error.response.data.invalidFields,
           };
         }
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           success: false,
           code: 500,
@@ -417,6 +482,10 @@ function customAxios() {
           error.response &&
           !error.response.data.success
         ) {
+          triggerSnackbar(
+            error.response.data.message || 'Erro na requisição',
+            'error',
+          );
           return {
             success: false,
             code: error.response.status,
@@ -435,6 +504,10 @@ function customAxios() {
           };
         }
 
+        triggerSnackbar(
+          'Erro inesperado, tente novamente mais tarde.',
+          'error',
+        );
         return {
           success: false,
           code: 500,
