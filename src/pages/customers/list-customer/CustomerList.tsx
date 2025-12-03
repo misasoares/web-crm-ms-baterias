@@ -33,6 +33,19 @@ export const CustomerList: React.FC = () => {
     refreshCustomers();
   };
 
+  const formatPhone = (phone: string) => {
+    const cleaned = phone.replace(/\D/g, '');
+    let match = cleaned.match(/^(\d{2})(\d{2})(\d{1})(\d{4})(\d{4})$/);
+    if (match) {
+      return `+${match[1]} (${match[2]}) ${match[3]} ${match[4]}-${match[5]}`;
+    }
+    match = cleaned.match(/^(\d{2})(\d{1})(\d{4})(\d{4})$/);
+    if (match) {
+      return `+55 (${match[1]}) ${match[2]} ${match[3]}-${match[4]}`;
+    }
+    return phone;
+  };
+
   return (
     <Box>
       <Box
@@ -77,7 +90,7 @@ export const CustomerList: React.FC = () => {
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell>{customer.name}</TableCell>
-                <TableCell>{customer.phone}</TableCell>
+                <TableCell>{formatPhone(customer.phone)}</TableCell>
                 <TableCell>
                   {new Date(customer.createdAt).toLocaleDateString()}
                 </TableCell>
