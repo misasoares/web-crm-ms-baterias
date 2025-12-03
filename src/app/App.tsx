@@ -1,16 +1,35 @@
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
+import { useTheme } from '../shared/contexts/ThemeContext';
+import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { useMemo } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { router } from './router';
-import { theme } from './theme';
 
 const App: React.FC = () => {
+  const { theme: mode } = useTheme();
+
+  const muiTheme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          primary: {
+            main: '#1976d2',
+          },
+          secondary: {
+            main: '#dc004e',
+          },
+        },
+      }),
+    [mode],
+  );
+
   return (
-    <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
       <RouterProvider router={router} />
-    </ThemeProvider>
+    </MuiThemeProvider>
   );
 };
 
