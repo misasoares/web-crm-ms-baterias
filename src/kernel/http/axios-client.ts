@@ -40,11 +40,11 @@ function customAxios() {
           },
         );
 
-        if (response.data.message) {
-          triggerSnackbar(response.data.message, 'success');
-        } else if (response.data.success) {
-          triggerSnackbar('Operação realizada com sucesso', 'success');
-        }
+        // if (response.data.message) {
+        //   triggerSnackbar(response.data.message, 'success');
+        // } else if (response.data.success) {
+        //   triggerSnackbar('Operação realizada com sucesso', 'success');
+        // }
 
         return response.data;
       } catch (error: any) {
