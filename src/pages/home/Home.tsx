@@ -49,7 +49,7 @@ export const Home: React.FC = () => {
 
         <Grid container spacing={3}>
           {menuCards.map((card) => (
-            <Grid item xs={12} sm={6} md={4} key={card.path}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={card.path}>
               <Card
                 sx={{
                   height: '100%',
