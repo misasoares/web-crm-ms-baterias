@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <AuthGuard isPrivate={true}>
+      <AuthGuard isPrivate={false}>
         <MainLayout />
       </AuthGuard>
     ),

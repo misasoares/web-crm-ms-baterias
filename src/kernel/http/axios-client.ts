@@ -207,12 +207,14 @@ function customAxios() {
         if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
           return {
             success: false,
+            code: error.response.status,
             message: error.response.data.message,
             invalidFields: error.response.data.invalidFields
           };
         }
         return {
           success: false,
+          code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
           invalidFields: []
         };
@@ -323,12 +325,14 @@ function customAxios() {
         if (isAxiosError<ResponseAPI<T>, Error>(error) && error.response && !error.response.data.success) {
           return {
             success: false,
+            code: error.response.status,
             message: error.response.data.message,
             invalidFields: error.response.data.invalidFields
           };
         }
         return {
           success: false,
+          code: 500,
           message: 'Erro inesperado, tente novamente mais tarde.',
           invalidFields: []
         };

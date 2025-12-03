@@ -15,10 +15,10 @@ const App: React.FC = () => {
         palette: {
           mode,
           primary: {
-            main: '#1976d2',
+            main: '#dc2626',
           },
           secondary: {
-            main: '#dc004e',
+            main: '#ffb108',
           },
         },
       }),
