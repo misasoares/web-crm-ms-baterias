@@ -24,6 +24,7 @@ const PhoneMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
       <IMaskInput
         {...other}
         mask="+{55} (00) 9 0000-0000"
+        lazy={false}
         inputRef={ref as React.RefCallback<HTMLInputElement>}
         onAccept={(value: string) =>
           onChange({ target: { name: props.name, value } })
