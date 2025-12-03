@@ -15,17 +15,45 @@ export const MainLayout: React.FC = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CRM App
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <ThemeSwitcher />
+          <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 120 }}>
+            <Typography variant="h6" component="div">
+              <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                CRM App
+              </Link>
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              gap: 2,
+            }}
+          >
+            <Button color="inherit" component={Link} to="/">
+              Home
+            </Button>
             <Button color="inherit" component={Link} to="/orders">
               Pedidos
             </Button>
             <Button color="inherit" component={Link} to="/customers">
               Clientes
             </Button>
+            <Button color="inherit" component={Link} to="/messages">
+              Lista de mensagens
+            </Button>
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              minWidth: 120,
+            }}
+          >
+            <ThemeSwitcher />
           </Box>
         </Toolbar>
       </AppBar>

@@ -29,3 +29,27 @@ export interface Order {
   customerId: string;
   customer?: Customer;
 }
+
+export type ReminderStatus = 'PENDING' | 'SENT' | 'CANCELLED' | 'FAILED';
+
+export const ReminderStatus = {
+  PENDING: 'PENDING' as ReminderStatus,
+  SENT: 'SENT' as ReminderStatus,
+  CANCELLED: 'CANCELLED' as ReminderStatus,
+  FAILED: 'FAILED' as ReminderStatus,
+};
+
+export interface OilChangeReminder {
+  id: string;
+  orderId: string;
+  scheduledFor: string;
+  status: ReminderStatus;
+  sentAt: string | null;
+  messageId: string | null;
+  cancelledAt: string | null;
+  attempts: number;
+  lastAttemptAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  order?: Order;
+}

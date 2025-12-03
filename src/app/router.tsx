@@ -6,6 +6,8 @@ import { AuthGuard } from '../shared/components/AuthGuard';
 import { TableDemo } from '../pages/demo/TableDemo';
 import { CustomerList } from '../pages/customers/list-customer/CustomerList';
 import { TestMessage } from '../pages/test-message/TestMessage';
+import { Home } from '../pages/home/Home';
+import { MessageList } from '../pages/messages/MessageList';
 
 export const router = createBrowserRouter([
   {
@@ -25,12 +27,12 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: 'orders',
-        children: orderRoutes,
+        index: true,
+        element: <Home />,
       },
       {
         path: 'orders',
-        element: <div>Orders Page</div>,
+        children: orderRoutes,
       },
       {
         path: 'demo-table',
@@ -39,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: 'customers',
         element: <CustomerList />,
+      },
+      {
+        path: 'messages',
+        element: <MessageList />,
       },
       {
         path: 'test-message',
