@@ -70,6 +70,19 @@ export const MessageList: React.FC = () => {
     }
   };
 
+  const formatPhone = (phone: string) => {
+    const cleaned = phone.replace(/\D/g, '');
+    let match = cleaned.match(/^(\d{2})(\d{2})(\d{1})(\d{4})(\d{4})$/);
+    if (match) {
+      return `+${match[1]} (${match[2]}) ${match[3]} ${match[4]}-${match[5]}`;
+    }
+    match = cleaned.match(/^(\d{2})(\d{1})(\d{4})(\d{4})$/);
+    if (match) {
+      return `+55 (${match[1]}) ${match[2]} ${match[3]}-${match[4]}`;
+    }
+    return phone;
+  };
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
@@ -104,7 +117,9 @@ export const MessageList: React.FC = () => {
                     {reminder.order?.customer?.name || 'N/A'}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    {reminder.order?.customer?.phone || 'N/A'}
+                    {reminder.order?.customer?.phone
+                      ? formatPhone(reminder.order.customer.phone)
+                      : 'N/A'}
                   </Typography>
                 </TableCell>
                 <TableCell>{reminder.order?.vehicle || 'N/A'}</TableCell>
