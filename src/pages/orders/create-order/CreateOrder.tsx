@@ -17,7 +17,7 @@ interface CustomProps {
   name: string;
 }
 
-const PhoneMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
+export const PhoneMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
   function PhoneMaskCustom(props, ref) {
     const { onChange, ...other } = props;
     return (

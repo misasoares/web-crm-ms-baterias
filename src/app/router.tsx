@@ -4,6 +4,7 @@ import { orderRoutes } from '../pages/orders/config/routes';
 import { Login } from '../pages/auth/Login';
 import { AuthGuard } from '../shared/components/AuthGuard';
 import { TableDemo } from '../pages/demo/TableDemo';
+import { CustomerList } from '../pages/customers/list-customer/CustomerList';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: 'demo-table',
         element: <TableDemo />,
+      },
+      {
+        path: 'customers',
+        element: <CustomerList />,
       },
     ],
   },

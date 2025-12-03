@@ -23,6 +23,9 @@ export const MainLayout: React.FC = () => {
             <Button color="inherit" component={Link} to="/orders">
               Pedidos
             </Button>
+            <Button color="inherit" component={Link} to="/customers">
+              Clientes
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
