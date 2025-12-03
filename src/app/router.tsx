@@ -3,6 +3,7 @@ import { MainLayout } from '../shared/layouts/MainLayout';
 import { orderRoutes } from '../pages/orders/config/routes';
 import { Login } from '../pages/auth/Login';
 import { AuthGuard } from '../shared/components/AuthGuard';
+import { TableDemo } from '../pages/demo/TableDemo';
 
 export const router = createBrowserRouter([
   {
@@ -26,8 +27,12 @@ export const router = createBrowserRouter([
         children: orderRoutes,
       },
       {
-        path: '/',
-        element: <div>Welcome to CRM App</div>,
+        path: 'orders',
+        element: <div>Orders Page</div>,
+      },
+      {
+        path: 'demo-table',
+        element: <TableDemo />,
       },
     ],
   },
