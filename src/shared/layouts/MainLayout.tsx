@@ -21,7 +21,7 @@ export const MainLayout: React.FC = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <ThemeSwitcher />
             <Button color="inherit" component={Link} to="/orders">
-              Orders
+              Pedidos
             </Button>
           </Box>
         </Toolbar>
