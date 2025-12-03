@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { httpClient } from '../../kernel/http/axios-client';
+import { ThemeSwitcher } from '../../shared/components/ThemeSwitcher';
 import { 
   EmailOutlined, 
   LockOutlined, 
@@ -104,20 +105,25 @@ export const Login = () => {
       </div>
 
       {/* Right Side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white relative overflow-hidden">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300">
+        {/* Theme Switcher */}
+        <div className="absolute top-4 right-4 z-20">
+          <ThemeSwitcher />
+        </div>
+
         {/* Background decoration */}
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-gray-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-        <div className="absolute top-0 left-0 w-64 h-64 bg-yellow-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-gray-50 dark:bg-gray-800 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-70 animate-blob"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 bg-yellow-50 dark:bg-yellow-900/20 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
 
         <div className="max-w-md w-full space-y-8 relative z-10">
           <div className="text-center">
             <div className="mx-auto h-12 w-12 bg-red-600 rounded-xl flex items-center justify-center text-white mb-4 shadow-lg transform rotate-3">
               <BatteryChargingFull />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               {isLogin ? 'Bem-vindo de volta' : 'Criar Conta'}
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               {isLogin ? 'Insira seus dados para acessar sua conta' : 'Comece com sua conta gratuita hoje'}
             </p>
           </div>
@@ -126,7 +132,7 @@ export const Login = () => {
             <div className="space-y-4">
               {!isLogin && (
                 <div className="relative">
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Nome Completo
                   </label>
                   <div className="relative">
@@ -135,7 +141,7 @@ export const Login = () => {
                       name="name"
                       type="text"
                       required
-                      className="appearance-none block w-full pl-3 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-150 ease-in-out sm:text-sm"
+                      className="appearance-none block w-full pl-3 pr-3 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-150 ease-in-out sm:text-sm"
                       placeholder="João Silva"
                       value={formData.name}
                       onChange={handleChange}
@@ -145,7 +151,7 @@ export const Login = () => {
               )}
               
               <div className="relative">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Endereço de Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -157,7 +163,7 @@ export const Login = () => {
                     name="email"
                     type="email"
                     required
-                    className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-150 ease-in-out sm:text-sm"
+                    className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-150 ease-in-out sm:text-sm"
                     placeholder="nome@empresa.com"
                     value={formData.email}
                     onChange={handleChange}
@@ -166,7 +172,7 @@ export const Login = () => {
               </div>
 
               <div className="relative">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Senha <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -178,13 +184,13 @@ export const Login = () => {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     required
-                    className="appearance-none block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-150 ease-in-out sm:text-sm"
+                    className="appearance-none block w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-150 ease-in-out sm:text-sm"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={handleChange}
                   />
                   <div 
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <VisibilityOffOutlined fontSize="small" /> : <VisibilityOutlined fontSize="small" />}
@@ -199,22 +205,22 @@ export const Login = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
                   Manter-me conectado
                 </label>
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-red-600 hover:text-red-500">
+                <a href="#" className="font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300">
                   Esqueceu a senha?
                 </a>
               </div>
             </div>
 
             {error && (
-              <div className="text-red-500 text-sm text-center bg-red-50 p-3 rounded-lg border border-red-100">
+              <div className="text-red-500 dark:text-red-400 text-sm text-center bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-100 dark:border-red-800">
                 {error}
               </div>
             )}
@@ -229,36 +235,36 @@ export const Login = () => {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Continuar com</span>
+                <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">Continuar com</span>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <Facebook className="text-blue-600" />
               </button>
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <WhatsApp className="text-green-500" />
               </button>
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <Google className="text-red-500" />
               </button>
             </div>
           </form>
 
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             {isLogin ? "Não tem uma conta? " : "Já tem uma conta? "}
             <button
               onClick={() => {
@@ -266,7 +272,7 @@ export const Login = () => {
                 setError('');
                 setFormData({ email: '', password: '', name: '' });
               }}
-              className="font-medium text-red-600 hover:text-red-500 transition-colors"
+              className="font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 transition-colors"
             >
               {isLogin ? 'Cadastre-se' : 'Entrar'}
             </button>
