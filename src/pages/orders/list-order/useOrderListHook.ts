@@ -16,29 +16,6 @@ export const useOrderListHook = () => {
       }
     } catch (error) {
       console.warn('Backend not found, using mock data', error);
-        // Mock data for demo
-        setOrders([
-          { 
-            id: '1', 
-            type: OrderType.BATTERY,
-            vehicle: 'Toyota Corolla',
-            product: 'Moura 60Ah',
-            customerId: '1',
-            customer: { id: '1', name: 'John Doe', phone: '123456789' },
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          { 
-            id: '2', 
-            type: OrderType.OIL,
-            vehicle: 'Honda Civic',
-            product: 'Óleo 5W30',
-            customerId: '2',
-            customer: { id: '2', name: 'Jane Smith', phone: '987654321' },
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-        ]);
     }
     setLoading(false);
   };
@@ -47,5 +24,19 @@ export const useOrderListHook = () => {
     fetchOrders();
   }, []);
 
-  return { orders, loading };
+  const deleteOrder = async (id: string) => {
+    try {
+      const response = await httpClient.doDelete(`/orders/${id}`);
+      if (response.success) {
+        await fetchOrders();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      return false;
+    }
+  };
+
+  return { orders, loading, deleteOrder };
 };
