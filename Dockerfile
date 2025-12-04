@@ -3,26 +3,30 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-# Copiar arquivos de dependência
+# Copiar dependências
 COPY package*.json ./
 
-# Instalar dependências
+# Instalar
 RUN npm ci
 
-# Copiar o código fonte
+# Copiar código
 COPY . .
 
-# Buildar os assets estáticos
+# --- AQUI ESTÁ A CORREÇÃO ---
+# Definimos a variável DIRETAMENTE aqui para o build enxergar.
+# (Sem barra no final, conforme boas práticas)
+ENV VITE_API_URL="https://api.crm.167.126.17.239.nip.io"
+
+# Buildar (Agora o Vite vai ler a variável acima e "queimar" no código JS)
 RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine
 
-# Copiar os arquivos estáticos gerados para o diretório do Nginx
+# Copiar arquivos do build
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Configuração do Nginx para SPA (Single Page Application)
-# Redireciona todas as requisições para o index.html para que o React Router funcione
+# Config Nginx para SPA
 RUN echo 'server { \
     listen 80; \
     location / { \
@@ -32,8 +36,5 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/conf.d/default.conf
 
-# Expor a porta 80
 EXPOSE 80
-
-# Iniciar o Nginx
 CMD ["nginx", "-g", "daemon off;"]
