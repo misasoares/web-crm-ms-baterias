@@ -41,7 +41,7 @@ export const CreateOrder: React.FC = () => {
     customerId: '',
     customerName: '',
     customerPhone: '',
-    type: '' as OrderType | '',
+    type: OrderType.OIL,
     vehicle: '',
     product: '',
   });
