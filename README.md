@@ -2,6 +2,35 @@
 
 Simple CRM for customer and order management, featuring automated message sending.
 
+<div align="center">
+  <img src="assets/image.png" alt="CRM Login" width="45%" />
+  <br /><br />
+  <img src="assets/image-1.png" alt="Dashboard View" width="45%" />
+  <img src="assets/image-2.png" alt="Customer List" width="45%" />
+  <br />
+  <img src="assets/image-3.png" alt="Order Management" width="45%" />
+  <img src="assets/image-4.png" alt="Messaging System" width="45%" />
+</div>
+
+## Features
+
+- **Customer Management**: Centralized hub for viewing customers.
+- **Order Management**: Track and manage orders efficiently.
+- **Automated Messaging**: System for sending automated messages to customers.
+- **Feedback System**: Global snackbar notifications for API responses (success/error).
+
+## Technical Stack
+
+- **Framework**: React 19 + TypeScript
+- **Build Tool**: Vite
+- **Styling**:
+  - Material UI (MUI) v7
+  - Tailwind CSS v4
+  - Emotion
+- **Routing**: React Router DOM v7
+- **HTTP Client**: Axios
+- **Utilities**: Lodash Debounce
+
 ## Available Scripts
 
 ### Development
