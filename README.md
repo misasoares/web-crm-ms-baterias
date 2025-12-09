@@ -1,5 +1,7 @@
 # CRM Web
 
+> Developed using **Antigravity**, with image generation integrated directly in the IDE with **Nano Banana**.
+
 Simple CRM for customer and order management, featuring automated message sending.
 
 <div align="center">
