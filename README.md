@@ -1,31 +1,31 @@
 # CRM Web
 
-CRM simples para gestão de clientes e pedidos para envio automatico de mensagem.
+Simple CRM for customer and order management, featuring automated message sending.
 
-## Scripts Disponíveis
+## Available Scripts
 
-### Desenvolvimento
+### Development
 
-- `npm run dev`: Inicia o servidor de desenvolvimento.
-- `npm run preview`: Visualiza a build de produção localmente.
+- `npm run dev`: Starts the development server.
+- `npm run preview`: Previews the production build locally.
 
-### Qualidade de Código
+### Code Quality
 
-- `npm run lint`: Executa o ESLint para verificar problemas no código.
-- `npm run format`: Formata o código usando Prettier.
-- `npm run pr-check`: Executa uma verificação completa (format, lint e build) antes de abrir um PR.
+- `npm run lint`: Runs ESLint to check for code issues.
+- `npm run format`: Formats code using Prettier.
+- `npm run pr-check`: Runs a full check (format, lint, and build) before opening a PR.
 
 ### Build
 
-- `npm run build`: Compila a aplicação para produção.
+- `npm run build`: Compiles the application for production.
 
-## Tratamento de Mensagens (Snackbar Global)
+## Message Handling (Global Snackbar)
 
-O frontend possui um sistema de **Snackbar Global** para exibir mensagens de sucesso e erro retornadas pela API.
+The frontend features a **Global Snackbar** system to display success and error messages returned by the API.
 
-- **Responsabilidade**: A API é a fonte da verdade para as mensagens. O frontend apenas as exibe.
-- **Funcionamento**:
-  - O `axios-client` intercepta todas as respostas.
-  - Se a resposta contiver uma mensagem (seja de sucesso ou erro), ela é disparada para o `SnackbarContext`.
-  - O Snackbar exibe a mensagem automaticamente (Verde para sucesso, Vermelho para erro).
-  - Se a API não retornar uma mensagem específica, uma mensagem genérica é exibida.
+- **Responsibility**: The API is the source of truth for messages. The frontend only displays them.
+- **How it works**:
+  - The `axios-client` intercepts all responses.
+  - If the response contains a message (either success or error), it is dispatched to the `SnackbarContext`.
+  - The Snackbar automatically displays the message (Green for success, Red for error).
+  - If the API does not return a specific message, a generic message is displayed.
