@@ -14,6 +14,9 @@ export interface Order {
   customer?: Customer;
   createdAt: string;
   updatedAt: string;
+  reminder?: {
+    status: 'PENDING' | 'SENT' | 'CANCELLED' | 'FAILED';
+  };
 }
 
 export interface CreateOrderDTO {

@@ -38,5 +38,22 @@ export const useOrderListHook = () => {
     }
   };
 
-  return { orders, loading, deleteOrder };
+  const updateOrder = async (
+    id: string,
+    data: { vehicle: string; product: string },
+  ) => {
+    try {
+      const response = await httpClient.doPatch<Order>(`/orders/${id}`, data);
+      if (response.success) {
+        await fetchOrders();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error updating order:', error);
+      return false;
+    }
+  };
+
+  return { orders, loading, deleteOrder, updateOrder };
 };
