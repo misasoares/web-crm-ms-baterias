@@ -8,6 +8,7 @@ import { CustomerList } from '../pages/customers/list-customer/CustomerList';
 import { TestMessage } from '../pages/test-message/TestMessage';
 import { Home } from '../pages/home/Home';
 import { MessageList } from '../pages/messages/MessageList';
+import { WhatsappConfig } from '../pages/messages/WhatsappConfig';
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: 'messages',
         element: <MessageList />,
+      },
+      {
+        path: 'whatsapp-config',
+        element: <WhatsappConfig />,
       },
       {
         path: 'test-message',

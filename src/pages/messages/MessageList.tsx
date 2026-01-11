@@ -11,7 +11,10 @@ import {
   Typography,
   Chip,
   CircularProgress,
+  Button,
 } from '@mui/material';
+import { Smartphone } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import { httpClient } from '../../kernel/http/axios-client';
 import {
   type OilChangeReminder,
@@ -21,6 +24,7 @@ import {
 export const MessageList: React.FC = () => {
   const [reminders, setReminders] = useState<OilChangeReminder[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchReminders();
@@ -93,9 +97,18 @@ export const MessageList: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom sx={{ mb: 4, fontWeight: 600 }}>
-        Lista de Mensagens
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+        <Typography variant="h4" sx={{ fontWeight: 600 }}>
+          Lista de Mensagens
+        </Typography>
+        <Button 
+          variant="outlined" 
+          startIcon={<Smartphone />} 
+          onClick={() => navigate('/whatsapp-config')}
+        >
+          Conectar WhatsApp
+        </Button>
+      </Box>
 
       <TableContainer component={Paper}>
         <Table>
