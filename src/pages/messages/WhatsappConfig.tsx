@@ -19,6 +19,7 @@ import {
   Refresh as RefreshIcon,
   Smartphone as SmartphoneIcon,
   Send as SendIcon,
+  LinkOff as LinkOffIcon,
 } from '@mui/icons-material';
 import { httpClient } from '../../kernel/http/axios-client';
 
@@ -41,6 +42,7 @@ export const WhatsappConfig: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [qrCodeData, setQrCodeData] = useState<QrData | null>(null);
   const [loadingQr, setLoadingQr] = useState(false);
+  const [loadingDisconnect, setLoadingDisconnect] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const fetchStatus = async () => {
@@ -83,6 +85,18 @@ export const WhatsappConfig: React.FC = () => {
       console.error('Failed to fetch QR code', error);
     } finally {
       setLoadingQr(false);
+    }
+  };
+
+  const handleDisconnect = async () => {
+    setLoadingDisconnect(true);
+    try {
+      await httpClient.doDelete('/whatsapp/disconnect');
+      await fetchStatus();
+    } catch (error) {
+      console.error('Failed to disconnect', error);
+    } finally {
+      setLoadingDisconnect(false);
     }
   };
 
@@ -193,6 +207,20 @@ export const WhatsappConfig: React.FC = () => {
             >
               {loadingQr ? 'Gerando...' : 'Gerar QR Code'}
             </Button>
+            
+            {status?.state === 'open' && (
+              <Button
+                variant="contained"
+                color="error"
+                size="large"
+                sx={{ ml: 2 }}
+                startIcon={loadingDisconnect ? <CircularProgress size={20} color="inherit" /> : <LinkOffIcon />}
+                onClick={handleDisconnect}
+                disabled={loadingDisconnect}
+              >
+                {loadingDisconnect ? 'Desconectando...' : 'Desconectar'}
+              </Button>
+            )}
           </Box>
         </CardContent>
       </Card>
