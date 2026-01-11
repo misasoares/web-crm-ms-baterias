@@ -3,6 +3,12 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
+# 1. Definir os argumentos de build (O Dokploy passará as Envs para cá)
+ARG VITE_API_URL
+
+# 2. Tornar o argumento uma variável de ambiente disponível para o processo de build
+ENV VITE_API_URL=$VITE_API_URL
+
 # Copiar dependências
 COPY package*.json ./
 
