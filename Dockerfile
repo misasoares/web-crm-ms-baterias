@@ -12,10 +12,7 @@ RUN npm ci
 # Copiar código
 COPY . .
 
-# --- AQUI ESTÁ A CORREÇÃO ---
-# Definimos a variável DIRETAMENTE aqui para o build enxergar.
-# (Sem barra no final, conforme boas práticas)
-ENV VITE_API_URL="https://api.crm.167.126.17.239.nip.io"
+
 
 # Buildar (Agora o Vite vai ler a variável acima e "queimar" no código JS)
 RUN npm run build
