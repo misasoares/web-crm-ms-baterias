@@ -74,11 +74,13 @@ export const WhatsappConfig: React.FC = () => {
     try {
       const response = await httpClient.doGet<QrData>('/whatsapp/qr');
       if (response.success && response.data) {
-        setQrCodeData(response.data as any);
+        const data = response.data as any;
+        setQrCodeData(data.qrcode || data);
         setDialogOpen(true);
       } else {
          // Fallback if data is returned directly
-         setQrCodeData(response as any);
+         const data = response as any;
+         setQrCodeData(data.qrcode || data);
          setDialogOpen(true);
       }
     } catch (error) {
