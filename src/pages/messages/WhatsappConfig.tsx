@@ -72,7 +72,8 @@ export const WhatsappConfig: React.FC = () => {
   const generateQrCode = async () => {
     setLoadingQr(true);
     try {
-      const response = await httpClient.doGet<QrData>('/whatsapp/qr');
+      // Add timestamp to prevent caching
+      const response = await httpClient.doGet<QrData>(`/whatsapp/qr?t=${new Date().getTime()}`);
       if (response.success && response.data) {
         const data = response.data as any;
         setQrCodeData(data.qrcode || data);
@@ -125,6 +126,38 @@ export const WhatsappConfig: React.FC = () => {
   useEffect(() => {
     fetchStatus();
   }, []);
+
+  // Poll for QR Code updates while dialog is open and not connected
+  useEffect(() => {
+    let intervalId: any;
+
+    if (dialogOpen && status?.state !== 'open') {
+      intervalId = setInterval(() => {
+        // Silent update (without loading spinner blocking view)
+        httpClient.doGet<QrData>(`/whatsapp/qr?t=${new Date().getTime()}`)
+          .then(response => {
+             if (response.success && response.data) {
+                const data = response.data as any;
+                setQrCodeData(data.qrcode || data);
+             }
+             // Also check status to auto-close if connected
+             fetchStatus();
+          })
+          .catch(err => console.error('Silent QR refresh failed', err));
+      }, 5000); // Check every 5 seconds
+    }
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [dialogOpen, status?.state]);
+
+  // Auto-close dialog if status becomes open
+  useEffect(() => {
+     if (dialogOpen && status?.state === 'open') {
+        setDialogOpen(false);
+     }
+  }, [status?.state, dialogOpen]);
 
   const getStatusColor = (state?: string) => {
     switch (state) {

@@ -106,7 +106,7 @@ export const MessageList: React.FC = () => {
           startIcon={<Smartphone />} 
           onClick={() => navigate('/whatsapp-config')}
         >
-          Conectar WhatsApp
+          Configurar WhatsApp
         </Button>
       </Box>
 
